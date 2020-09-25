@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up node
-        uses: actions/setup-node
+        uses: actions/setup-node@v1
 
       - name: Set up widdershins
         run: |
@@ -23,7 +23,7 @@ jobs:
           widdershins --language_tabs 'javascript:JavaScript' 'ruby:Ruby' 'python:Python' 'go:Go' --summary petstore.json -o slate/index.html.md
 
       - name: Set up ruby
-        uses: actions/setup-ruby
+        uses: actions/setup-ruby@v1
 
       - name: Set up slate
         run: |
