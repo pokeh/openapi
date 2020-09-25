@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,11 @@ jobs:
       - name: Set up slate
         run: |
           cd slate
+          pwd
+          FILE=Gemfile.lock
+          if [ -f "$FILE" ]; then
+            echo "$FILE exists."
+          fi
           gem install bundler
           bundle install
           cp -f index.html.md source/
