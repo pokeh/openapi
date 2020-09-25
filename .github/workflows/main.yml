@@ -17,7 +17,7 @@ jobs:
           submodules: recursive
 
       - name: Set up go
-        with: actions/setup-go@v2
+        uses: actions/setup-go@v2
 
       - name: Generate an OpenAPI format yaml from code annotation
         run: |
