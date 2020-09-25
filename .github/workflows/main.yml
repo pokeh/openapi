@@ -16,17 +16,19 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Set up go-swagger
+      - name: Set up go
+        with: actions/setup-go@v2
+
+      - name: Generate an OpenAPI format yaml from code annotation
         run: |
-          download_url=$(curl -s https://api.github.com/repos/go-swagger/go-swagger/releases/latest | \
-          jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url')
-          curl -o /usr/local/bin/swagger -L'#' "$download_url"
-          chmod +x /usr/local/bin/swagger
+          git clone https://github.com/go-swagger/go-swagger go-swagger
+          go install ./cmd/swagger
+          swagger version
 
       - name: Set up node
         uses: actions/setup-node@v1
 
-      - name: Set up widdershins
+      - name: Generate md from yaml
         run: |
           npm install -g widdershins
           widdershins --language_tabs 'javascript:JavaScript' 'ruby:Ruby' 'python:Python' 'go:Go' --summary petstore.json -o slate/index.html.md
@@ -34,7 +36,7 @@ jobs:
       - name: Set up ruby
         uses: actions/setup-ruby@v1
 
-      - name: Set up slate
+      - name: Generate html from md
         run: |
           cd slate
           gem install bundler
