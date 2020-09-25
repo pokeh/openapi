@@ -14,17 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up widdershins
+      - name: Set up node
         uses: actions/setup-node
-      - run: |
-        npm install -g widdershins
-        widdershins --language_tabs 'javascript:JavaScript' 'ruby:Ruby' 'python:Python' 'go:Go' --summary petstore.json -o slate/index.html.md
+
+      - name: Set up widdershins
+        run: |
+          npm install -g widdershins
+          widdershins --language_tabs 'javascript:JavaScript' 'ruby:Ruby' 'python:Python' 'go:Go' --summary petstore.json -o slate/index.html.md
+
+      - name: Set up ruby
+        uses: actions/setup-ruby
 
       - name: Set up slate
-        uses: actions/setup-ruby
-      - run: |
-        cd slate
-        gem install bundler
-        bundle install
-        cp -f index.html.md source/
-        bundle exec middleman build
+        run: |
+          cd slate
+          gem install bundler
+          bundle install
+          cp -f index.html.md source/
+          bundle exec middleman build
