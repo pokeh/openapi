@@ -16,13 +16,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Set up go
-        uses: actions/setup-go@v2
-
       - name: Generate an OpenAPI format yaml from code annotation
         run: |
-          git clone https://github.com/go-swagger/go-swagger go-swagger
-          go install ./go-swagger/cmd/swagger
+          sudo apt install gnupg ca-certificates
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
+          echo "deb https://dl.bintray.com/go-swagger/goswagger-debian ubuntu main" | sudo tee /etc/apt/sources.list.d/goswagger.list
+          sudo apt update
+          sudo apt install swagger
           swagger version
 
       - name: Set up node
